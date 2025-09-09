@@ -39,21 +39,23 @@ namespace dbd
             {
                 if (File.Exists(ImgPath))
                 {
-
                     using (FileStream fs = new FileStream(ImgPath, FileMode.Open, FileAccess.Read))
+                    using (var img = Image.FromStream(fs))
                     {
-                        pictureBox1.Image = Image.FromStream(fs);
+                        pictureBox1.Image = new Bitmap(img);
                     }
                 }
                 else
                 {
+                    Console.WriteLine("Нет файла: " + ImgPath);
                     pictureBox1.Image = null;
                 }
             }
             catch (Exception ex)
             {
+                Console.WriteLine("Ошибка при попытке загрузки: " + ImgPath);
+                Console.WriteLine(" -> " + ex.Message);
                 pictureBox1.Image = null;
-                Console.WriteLine("Ошибка загрузки картинки: " + ex.Message);
             }
         }
 
