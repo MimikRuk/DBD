@@ -37,6 +37,8 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.bBack1 = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.bNext = new System.Windows.Forms.Button();
+            this.bPrev = new System.Windows.Forms.Button();
             this.bBack2 = new System.Windows.Forms.Button();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.tabPage4 = new System.Windows.Forms.TabPage();
@@ -143,6 +145,8 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.bNext);
+            this.tabPage3.Controls.Add(this.bPrev);
             this.tabPage3.Controls.Add(this.bBack2);
             this.tabPage3.Controls.Add(this.flowLayoutPanel1);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
@@ -151,7 +155,25 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "tabPage3";
             this.tabPage3.UseVisualStyleBackColor = true;
-            this.tabPage3.Click += new System.EventHandler(this.tabPage3_Click);
+            // 
+            // bNext
+            // 
+            this.bNext.Location = new System.Drawing.Point(500, 275);
+            this.bNext.Name = "bNext";
+            this.bNext.Size = new System.Drawing.Size(35, 35);
+            this.bNext.TabIndex = 9;
+            this.bNext.Text = ">";
+            this.bNext.UseVisualStyleBackColor = true;
+            this.bNext.Click += new System.EventHandler(this.bNext_Click);
+            // 
+            // bPrev
+            // 
+            this.bPrev.Location = new System.Drawing.Point(200, 275);
+            this.bPrev.Name = "bPrev";
+            this.bPrev.Size = new System.Drawing.Size(35, 35);
+            this.bPrev.TabIndex = 0;
+            this.bPrev.Text = "<";
+            this.bPrev.UseVisualStyleBackColor = true;
             // 
             // bBack2
             // 
@@ -220,7 +242,7 @@
             this.ru.TabIndex = 3;
             this.ru.Text = "RU";
             this.ru.UseVisualStyleBackColor = true;
-            this.ru.Click += new System.EventHandler(this.ru_Click);
+            this.ru.Click += new System.EventHandler(this.bPrev_Click);
             // 
             // Form1
             // 
@@ -260,6 +282,8 @@
         private System.Windows.Forms.Button bBack1;
         private System.Windows.Forms.Button bBack2;
         private System.Windows.Forms.Button bBack3;
+        private System.Windows.Forms.Button bNext;
+        private System.Windows.Forms.Button bPrev;
     }
 }
 

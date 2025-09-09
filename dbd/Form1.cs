@@ -18,6 +18,8 @@ namespace dbd
     {
         private bool Ruverse = true;
         private readonly string dbPath = @"Data Source=C:\Users\Mimik\source\repos\dbd\dbd\dbd.db";
+        private List<CharactersCard> allCards = new List<CharactersCard>();
+        private int currentIndex = 0;
         public Form1()
         {
             InitializeComponent();
@@ -35,22 +37,66 @@ namespace dbd
             string dbFile = Path.Combine(Application.StartupPath, "dbd.db");
             using (var conn = new SqliteConnection($"Data Source={dbFile}"))
             {
-                conn.Open();
+                await conn.OpenAsync();
                 string sqlcomm = "SELECT Url, Ruverse FROM Characters ORDER BY Id ASC ";
                 using (var cmd = new SqliteCommand(sqlcomm, conn))
                 using (var reader = cmd.ExecuteReader())
                 {
-                    while (reader.Read())
+                    while (await reader.ReadAsync())
                     {
                         var card = new CharactersCard();
                         card.Pers = reader["Ruverse"].ToString();
-                        card.ImageUrl = reader["Url"].ToString();
+                        card.ImageUrl = reader["Url"].ToString().Trim();
                         await card.LoadImageAsync();
 
 
                         flowLayoutPanel1.Controls.Add(card);
                     }   
                 }
+                
+            }
+            RenderCards();
+        }
+
+        private void RenderCards()
+        {
+            flowLayoutPanel1.Controls.Clear();
+
+            int leftIndex = currentIndex - 1;
+            int rightIndex = currentIndex + 1;
+
+            int spacing = 20;
+            int cardWidth = 180;
+            int cardHeight = 250;
+
+            int startX = (flowLayoutPanel1.Width - (cardWidth * 3 + spacing * 2)) / 2;
+            int y = (flowLayoutPanel1.Height - cardHeight) / 2;
+
+            if (leftIndex >= 0)
+            {
+                var leftCard = allCards[leftIndex];
+                leftCard.Width = cardWidth;
+                leftCard.Height = cardHeight;
+                leftCard.Location = new Point(startX, y);
+                flowLayoutPanel1.Controls.Add(leftCard);
+            }
+
+            if (currentIndex >= 0 && currentIndex < allCards.Count)
+            {
+                var midCard = allCards[currentIndex];
+                midCard.Width = cardWidth;
+                midCard.Height = cardHeight;
+                midCard.Location = new Point(startX + cardWidth + spacing, y);
+                flowLayoutPanel1.Controls.Add(midCard);
+            }
+
+            if (rightIndex < allCards.Count)
+            {
+                var rightCard = allCards[rightIndex];
+                rightCard.Width = cardWidth;
+                rightCard.Height = cardHeight;
+                rightCard.Location = new Point(startX + (cardWidth + spacing) * 2, y);
+                flowLayoutPanel1.Controls.Add(rightCard);
             }
         }
 
@@ -94,15 +140,22 @@ namespace dbd
         {
             tabControl1.SelectedTab = tabPage3;
         }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void bPrev_Click(object sender, EventArgs e)
         {
-
+            if (currentIndex > 0)
+            {
+                currentIndex--;
+                RenderCards();
+            }
+        }
+        private void bNext_Click(object sender, EventArgs e)
+        {
+            if (currentIndex < allCards.Count - 1)
+            {
+                currentIndex++;
+                RenderCards();
+            }
         }
 
-        private void tabPage3_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }
