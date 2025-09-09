@@ -1,15 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.IO;
-using System.Net;
-using System.Net.Http;
+using System.Windows.Forms;
+
 
 
 
@@ -20,9 +13,12 @@ namespace dbd
         public CharactersCard()
         {
             InitializeComponent();
+
             pictureBox1.Dock = DockStyle.Top;
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.Height = 128;
+            label1.Dock = DockStyle.Bottom;
+            checkBox1.Dock = DockStyle.Bottom;
         }
 
         public string Pers
@@ -35,23 +31,23 @@ namespace dbd
             get => checkBox1.Checked;
             set => checkBox1.Checked = value;
         }
-        public string ImageUrl { get; set; }
+        public string ImgPath { get; set; }      
 
-        public async Task LoadImageAsync()
+        public void LoadImgFromFile()
         {
-        Console.WriteLine("URL картинки: " + ImageUrl);
             try
             {
-                using (var http = new HttpClient())
+                if (File.Exists(ImgPath))
                 {
-                    // ставим нормальный заголовок как у браузера
-                    http.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (Windows NT 10.0; Win64; x64)");
 
-                    var bytes = await http.GetByteArrayAsync(ImageUrl);
-                    using (var ms = new MemoryStream(bytes))
+                    using (FileStream fs = new FileStream(ImgPath, FileMode.Open, FileAccess.Read))
                     {
-                        pictureBox1.Image = Image.FromStream(ms);
+                        pictureBox1.Image = Image.FromStream(fs);
                     }
+                }
+                else
+                {
+                    pictureBox1.Image = null;
                 }
             }
             catch (Exception ex)

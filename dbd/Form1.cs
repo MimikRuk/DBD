@@ -1,25 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Data.Sqlite;
-using System.Data.SQLite;
-using System.IO;
-using System.Net.Http;
 
 namespace dbd
 {
+// Объявление переменых и стартовые данные
     public partial class Form1 : Form
     {
-        private bool Ruverse = true;
-        private readonly string dbPath = @"Data Source=C:\Users\Mimik\source\repos\dbd\dbd\dbd.db";
+        private bool Ru = true;
+        private bool Pick = true;
         private List<CharactersCard> allCards = new List<CharactersCard>();
-        private int currentIndex = 0;
         public Form1()
         {
             InitializeComponent();
@@ -32,38 +27,62 @@ namespace dbd
             langB.BringToFront();
 
         }
+// Выборка по роли и языку, а так же логика отображения персонажей
         private async Task LoadData()
         {
             string dbFile = Path.Combine(Application.StartupPath, "dbd.db");
             using (var conn = new SqliteConnection($"Data Source={dbFile}"))
             {
                 await conn.OpenAsync();
-                string sqlcomm = "SELECT Url, Ruverse FROM Characters ORDER BY Id ASC ";
+
+                string langColumn = Ru ? "Ruverse" : "Name";
+
+                string roleFilter = Pick ? "Survivor" : "Killer";
+
+                string sqlcomm = $"SELECT Url, {langColumn} FROM Characters WHERE Role = '{roleFilter}' ORDER BY Id ASC";
+
                 using (var cmd = new SqliteCommand(sqlcomm, conn))
-                using (var reader = cmd.ExecuteReader())
+                using (var reader = await cmd.ExecuteReaderAsync())
                 {
+                    allCards.Clear();
+                    CurrentIndex = 0;
+
                     while (await reader.ReadAsync())
                     {
                         var card = new CharactersCard();
-                        card.Pers = reader["Ruverse"].ToString();
-                        card.ImageUrl = reader["Url"].ToString().Trim();
-                        await card.LoadImageAsync();
+                        card.Pers = reader[Ru ? "Ruverse" : "Name"].ToString();
+                        string imgsDir = Path.Combine(Application.StartupPath, "dbdImg");
+                        string imgFile = reader["Url"].ToString().Trim();
+                        string fullPath = Path.Combine(imgsDir, imgFile);
+                        card.ImgPath = fullPath;
+                        card.LoadImgFromFile();
+                        allCards.Add(card);
+                    }
 
-
-                        flowLayoutPanel1.Controls.Add(card);
-                    }   
                 }
-                
+                RenderCards();
             }
-            RenderCards();
         }
+//Отдельные индексы прокрутки колеса выбора персонажей
+        private int currentSurvIndex = 0;
+        private int currentKillIndex = 0;
 
+        private int CurrentIndex
+        {
+            get => Pick ? currentSurvIndex : currentKillIndex;
+            set
+            {
+                if (Pick) currentSurvIndex = value;
+                else currentKillIndex = value;
+            }
+        }
+// Логика колеса
         private void RenderCards()
         {
             flowLayoutPanel1.Controls.Clear();
 
-            int leftIndex = currentIndex - 1;
-            int rightIndex = currentIndex + 1;
+            int leftIndex = CurrentIndex - 1;
+            int rightIndex = CurrentIndex + 1;
 
             int spacing = 20;
             int cardWidth = 180;
@@ -81,9 +100,9 @@ namespace dbd
                 flowLayoutPanel1.Controls.Add(leftCard);
             }
 
-            if (currentIndex >= 0 && currentIndex < allCards.Count)
+            if (CurrentIndex >= 0 && CurrentIndex < allCards.Count)
             {
-                var midCard = allCards[currentIndex];
+                var midCard = allCards[CurrentIndex];
                 midCard.Width = cardWidth;
                 midCard.Height = cardHeight;
                 midCard.Location = new Point(startX + cardWidth + spacing, y);
@@ -99,7 +118,7 @@ namespace dbd
                 flowLayoutPanel1.Controls.Add(rightCard);
             }
         }
-
+// Функционал кнопок
         private void bBack1_Click(object sender, EventArgs e)
         {
             tabControl1.SelectedTab = tabPage1;
@@ -122,37 +141,44 @@ namespace dbd
         }
         private void button5_Click(object sender, EventArgs e)
         {
-            string query = "SELECT Characters.Ruverse, Perks.Ruverse";
         }
-        private void ru_Click(object sender, EventArgs e)
+        private async void ru_Click(object sender, EventArgs e)
         {
-            langP.Visible = false;
+            langP.Hide();
+            Ru = true;
+            await LoadData();
         }
-        private void eng_Click(object sender, EventArgs e)
+        private async void eng_Click(object sender, EventArgs e)
         {
-            langP.Visible = false;
+            langP.Hide();
+            Ru = false;
+            await LoadData();
         }
-        private void pSurv_Click(object sender, EventArgs e)
+        private async void pSurv_Click(object sender, EventArgs e)
         {
             tabControl1.SelectedTab = tabPage3;
+            Pick = true;
+            await LoadData();
         }
-        private void pKill_Click(object sender, EventArgs e)
+        private async void pKill_Click(object sender, EventArgs e)
         {
             tabControl1.SelectedTab = tabPage3;
+            Pick = false;
+            await LoadData();
         }
         private void bPrev_Click(object sender, EventArgs e)
         {
-            if (currentIndex > 0)
+            if (CurrentIndex > 0)
             {
-                currentIndex--;
+                CurrentIndex--;
                 RenderCards();
             }
         }
         private void bNext_Click(object sender, EventArgs e)
         {
-            if (currentIndex < allCards.Count - 1)
+            if (CurrentIndex < allCards.Count - 1)
             {
-                currentIndex++;
+                CurrentIndex++;
                 RenderCards();
             }
         }

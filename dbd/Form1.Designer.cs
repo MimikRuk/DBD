@@ -174,6 +174,7 @@
             this.bPrev.TabIndex = 0;
             this.bPrev.Text = "<";
             this.bPrev.UseVisualStyleBackColor = true;
+            this.bPrev.Click += new System.EventHandler(this.bPrev_Click);
             // 
             // bBack2
             // 
@@ -242,7 +243,7 @@
             this.ru.TabIndex = 3;
             this.ru.Text = "RU";
             this.ru.UseVisualStyleBackColor = true;
-            this.ru.Click += new System.EventHandler(this.bPrev_Click);
+            this.ru.Click += new System.EventHandler(this.ru_Click);
             // 
             // Form1
             // 

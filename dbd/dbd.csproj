@@ -130,6 +130,94 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Content Include="1\2\Animatronic.png" />
+    <Content Include="1\2\Artist.png" />
+    <Content Include="1\2\Blight.png" />
+    <Content Include="1\2\Cannibal.png" />
+    <Content Include="1\2\Cenobite.png" />
+    <Content Include="1\2\Clown.png" />
+    <Content Include="1\2\Dark_Lord.png" />
+    <Content Include="1\2\Deathslinger.png" />
+    <Content Include="1\2\Demogorgon.png" />
+    <Content Include="1\2\Doctor.png" />
+    <Content Include="1\2\Dredge.png" />
+    <Content Include="1\2\Executioner.png" />
+    <Content Include="1\2\Ghost_Face.png" />
+    <Content Include="1\2\Ghoul.png" />
+    <Content Include="1\2\Good_Guy.png" />
+    <Content Include="1\2\Hag.png" />
+    <Content Include="1\2\Hillbilly.png" />
+    <Content Include="1\2\Houndmaster.png" />
+    <Content Include="1\2\Huntress.png" />
+    <Content Include="1\2\Knight.png" />
+    <Content Include="1\2\Legion.png" />
+    <Content Include="1\2\Lich.png" />
+    <Content Include="1\2\Mastermind.png" />
+    <Content Include="1\2\Nemesis.png" />
+    <Content Include="1\2\Nightmare.png" />
+    <Content Include="1\2\Nurse.png" />
+    <Content Include="1\2\Oni.png" />
+    <Content Include="1\2\Onryo.png" />
+    <Content Include="1\2\Pig.png" />
+    <Content Include="1\2\Plague.png" />
+    <Content Include="1\2\Shape.png" />
+    <Content Include="1\2\Singularity.png" />
+    <Content Include="1\2\Skull_Merchant.png" />
+    <Content Include="1\2\Spirit.png" />
+    <Content Include="1\2\Trapper.png" />
+    <Content Include="1\2\Trickster.png" />
+    <Content Include="1\2\Twins.png" />
+    <Content Include="1\2\Unknown.png" />
+    <Content Include="1\2\Wraith.png" />
+    <Content Include="1\2\Xenomorph.png" />
+    <Content Include="1\3\Ace.png" />
+    <Content Include="1\3\Ada.png" />
+    <Content Include="1\3\Adam.png" />
+    <Content Include="1\3\Alan.png" />
+    <Content Include="1\3\Ash.png" />
+    <Content Include="1\3\Bill.png" />
+    <Content Include="1\3\Cheryl.png" />
+    <Content Include="1\3\Claudette.png" />
+    <Content Include="1\3\DavidK.png" />
+    <Content Include="1\3\DavidT.png" />
+    <Content Include="1\3\Dwight.png" />
+    <Content Include="1\3\Ellen.png" />
+    <Content Include="1\3\Elodie.png" />
+    <Content Include="1\3\Felix.png" />
+    <Content Include="1\3\Feng.png" />
+    <Content Include="1\3\Gabriel.png" />
+    <Content Include="1\3\Haddie.png" />
+    <Content Include="1\3\Jake.png" />
+    <Content Include="1\3\Jane.png" />
+    <Content Include="1\3\Jeff.png" />
+    <Content Include="1\3\Jill.png" />
+    <Content Include="1\3\Jonah.png" />
+    <Content Include="1\3\Kate.png" />
+    <Content Include="1\3\Lara.png" />
+    <Content Include="1\3\Laurie.png" />
+    <Content Include="1\3\Leon.png" />
+    <Content Include="1\3\Meg.png" />
+    <Content Include="1\3\Michonne.png" />
+    <Content Include="1\3\Mikaela.png" />
+    <Content Include="1\3\Nancy.png" />
+    <Content Include="1\3\Nea.png" />
+    <Content Include="1\3\Nicolas.png" />
+    <Content Include="1\3\Orela.png" />
+    <Content Include="1\3\Quentin.png" />
+    <Content Include="1\3\Rebecca.png" />
+    <Content Include="1\3\Renato.png" />
+    <Content Include="1\3\Rick.png" />
+    <Content Include="1\3\Sable.png" />
+    <Content Include="1\3\Steve.png" />
+    <Content Include="1\3\Taurie.png" />
+    <Content Include="1\3\Thalita.png" />
+    <Content Include="1\3\Trevor.png" />
+    <Content Include="1\3\Troupe.png" />
+    <Content Include="1\3\Vittorio.png" />
+    <Content Include="1\3\Yoichi.png" />
+    <Content Include="1\3\Yui.png" />
+    <Content Include="1\3\Yun.png" />
+    <Content Include="1\3\Zarina.png" />
     <Content Include="dbd.db">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -146,6 +234,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="1\4\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
