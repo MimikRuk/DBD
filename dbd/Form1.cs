@@ -22,14 +22,55 @@ namespace dbd
             tabControl1.Appearance = TabAppearance.FlatButtons;
             tabControl1.ItemSize = new Size(0, 1);
             tabControl1.SizeMode = TabSizeMode.Fixed;
-            langP.Visible = false;
-            langP.BringToFront();
-            langB.BringToFront();
-
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = true;
+            this.SizeGripStyle = SizeGripStyle.Hide;
+            this.StartPosition = FormStartPosition.CenterScreen;
+            foreach (var btn in new[] { pSurv, pKill, langB, bNext, bPrev, ru, eng, bBack1, bBack2, bBack3, })
+            {
+                btn.MouseEnter += Button_MouseEnter;
+                btn.MouseLeave += Button_MouseLeave;
+            }
         }
+// Изменение размера элементов при наведении на них
+
+        private Dictionary<Button, (Size, Point)> originalStates = new Dictionary<Button, (Size, Point)>();
+
+        private void Button_MouseEnter(object sender, EventArgs e)
+        {
+            var btn = sender as Button;
+
+            if (!originalStates.ContainsKey(btn))
+                originalStates[btn] = (btn.Size, btn.Location);
+
+            int dw = (int)(btn.Width * 0.05);
+            int dh = (int)(btn.Height * 0.05);
+
+            btn.Size = new Size(btn.Width + dw, btn.Height + dh);
+            btn.Location = new Point(btn.Location.X - dw / 2, btn.Location.Y - dh / 2);
+        }
+
+        private void Button_MouseLeave(object sender, EventArgs e)
+        {
+            var btn = sender as Button;
+
+            if (originalStates.ContainsKey(btn))
+            {
+                var (size, loc) = originalStates[btn];
+                btn.Size = size;
+                btn.Location = loc;
+            }
+        }
+
+// Прозрачность FloatLayoutPanel1
+
+        
 // Выборка по роли и языку, а так же логика отображения персонажей
         private async Task LoadData()
         {
+            pSurv.Show();
+            pKill.Show();
             string dbFile = Path.Combine(Application.StartupPath, "dbd.db");
             using (var conn = new SqliteConnection($"Data Source={dbFile}"))
             {
@@ -55,6 +96,8 @@ namespace dbd
                         string imgFile = reader["Url"].ToString().Trim();
                         string fullPath = Path.Combine(imgsDir, imgFile);
                         card.ImgPath = fullPath;
+                        card.cardS = Pick;
+                        card.ChooseCard();
                         card.LoadImgFromFile();
                         allCards.Add(card);
                     }
@@ -156,12 +199,16 @@ namespace dbd
         }
         private async void pSurv_Click(object sender, EventArgs e)
         {
+            pSurv.Hide();
+            pKill.Hide();
             tabControl1.SelectedTab = tabPage3;
             Pick = true;
             await LoadData();
         }
         private async void pKill_Click(object sender, EventArgs e)
         {
+            pSurv.Hide();
+            pKill.Hide();
             tabControl1.SelectedTab = tabPage3;
             Pick = false;
             await LoadData();

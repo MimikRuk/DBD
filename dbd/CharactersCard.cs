@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 
 
@@ -19,6 +20,16 @@ namespace dbd
             pictureBox1.Height = 128;
             label1.Dock = DockStyle.Bottom;
             checkBox1.Dock = DockStyle.Bottom;
+        }
+    public bool cardS { get; set; }
+    public void ChooseCard()
+    {
+            if (cardS)
+                pictureBox1.BackgroundImage = Properties.Resources.survC;
+            else
+                pictureBox1.BackgroundImage = Properties.Resources.killC;
+
+            pictureBox1.BackgroundImageLayout = ImageLayout.Zoom;
         }
 
         public string Pers
