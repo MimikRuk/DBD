@@ -31,7 +31,7 @@ namespace dbd
             get => checkBox1.Checked;
             set => checkBox1.Checked = value;
         }
-        public string ImgPath { get; set; }      
+        public string ImgPath { get; set; }
 
         public void LoadImgFromFile()
         {
@@ -39,11 +39,7 @@ namespace dbd
             {
                 if (File.Exists(ImgPath))
                 {
-                    using (FileStream fs = new FileStream(ImgPath, FileMode.Open, FileAccess.Read))
-                    using (var img = Image.FromStream(fs))
-                    {
-                        pictureBox1.Image = new Bitmap(img);
-                    }
+                    pictureBox1.Image = new Bitmap(ImgPath);
                 }
                 else
                 {
