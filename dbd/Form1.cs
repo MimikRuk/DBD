@@ -27,11 +27,14 @@ namespace dbd
             this.MinimizeBox = true;
             this.SizeGripStyle = SizeGripStyle.Hide;
             this.StartPosition = FormStartPosition.CenterScreen;
-            foreach (var btn in new[] { pSurv, pKill, langB, bNext, bPrev, ru, eng, bBack1, bBack2, bBack3, })
+            foreach (var btn in new[] { pSurv, pKill, langB, bNext, bPrev, ru, eng, bBack1, bBack2, bBack3, button})
             {
                 btn.MouseEnter += Button_MouseEnter;
                 btn.MouseLeave += Button_MouseLeave;
             }
+            button.Location = new Point(
+    (this.ClientSize.Width - button.Width) / 2,
+    (this.ClientSize.Height - button.Height) / 2);
         }
 // Изменение размера элементов при наведении на них
 

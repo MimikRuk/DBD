@@ -133,6 +133,16 @@ namespace dbd.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap startB {
+            get {
+                object obj = ResourceManager.GetObject("startB", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap survB {
             get {
                 object obj = ResourceManager.GetObject("survB", resourceCulture);

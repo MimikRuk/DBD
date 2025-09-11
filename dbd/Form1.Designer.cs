@@ -44,12 +44,12 @@ namespace dbd
             this.bNext = new System.Windows.Forms.Button();
             this.bPrev = new System.Windows.Forms.Button();
             this.bBack2 = new System.Windows.Forms.Button();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.bBack3 = new System.Windows.Forms.Button();
             this.langP = new System.Windows.Forms.Panel();
             this.eng = new System.Windows.Forms.Button();
             this.ru = new System.Windows.Forms.Button();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -60,12 +60,18 @@ namespace dbd
             // 
             // button
             // 
-            this.button.Location = new System.Drawing.Point(271, 220);
+            this.button.BackColor = System.Drawing.Color.Transparent;
+            this.button.BackgroundImage = global::dbd.Properties.Resources.startB;
+            this.button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.button.FlatAppearance.BorderSize = 0;
+            this.button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button.Location = new System.Drawing.Point(216, 123);
             this.button.Name = "button";
-            this.button.Size = new System.Drawing.Size(221, 123);
+            this.button.Size = global::dbd.Properties.Resources.startB.Size;
             this.button.TabIndex = 0;
-            this.button.Text = "Start";
-            this.button.UseVisualStyleBackColor = true;
+            this.button.UseVisualStyleBackColor = false;
             this.button.Click += new System.EventHandler(this.button_Click);
             // 
             // langB
@@ -231,6 +237,14 @@ namespace dbd
             this.bBack2.UseVisualStyleBackColor = false;
             this.bBack2.Click += new System.EventHandler(this.bBack2_Click);
             // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 169);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(759, 327);
+            this.flowLayoutPanel1.TabIndex = 10;
+            // 
             // tabPage4
             // 
             this.tabPage4.BackgroundImage = global::dbd.Properties.Resources.wallP;
@@ -302,14 +316,6 @@ namespace dbd
             this.ru.Text = "RU";
             this.ru.UseVisualStyleBackColor = false;
             this.ru.Click += new System.EventHandler(this.ru_Click);
-            // 
-            // flowLayoutPanel1
-            // 
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 169);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(759, 327);
-            this.flowLayoutPanel1.TabIndex = 10;
-            flowLayoutPanel1.BackColor = Color.Transparent;
             // 
             // Form1
             // 
