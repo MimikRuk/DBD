@@ -89,7 +89,7 @@ namespace dbd
                 using (var reader = await cmd.ExecuteReaderAsync())
                 {
                     allCards.Clear();
-                    CurrentIndex = 0;
+                    CurrentIndex = 1;
 
                     while (await reader.ReadAsync())
                     {
@@ -101,12 +101,18 @@ namespace dbd
                         card.ImgPath = fullPath;
                         card.cardS = Pick;
                         card.ChooseCard();
+                        Console.WriteLine($"Card {card.Pers} -> {fullPath} (exists: {File.Exists(fullPath)})");
                         card.LoadImgFromFile();
+                        // 🔥 фикс начальных размеров
+                        card.Width = 180;
+                        card.Height = 250;
+                        card.AutoSize = false;
+
                         allCards.Add(card);
                     }
 
+                    RenderCards(); // вызов рисования
                 }
-                RenderCards();
             }
         }
 //Отдельные индексы прокрутки колеса выбора персонажей
@@ -122,49 +128,59 @@ namespace dbd
                 else currentKillIndex = value;
             }
         }
-// Логика колеса
+        // Логика колеса
         private void RenderCards()
         {
-            flowLayoutPanel1.Controls.Clear();
+            panelCards.Controls.Clear();
+            if (allCards.Count == 0) return;
 
-            int leftIndex = CurrentIndex - 1;
-            int rightIndex = CurrentIndex + 1;
-
-            int spacing = 20;
             int cardWidth = 180;
             int cardHeight = 250;
+            int spacing = 50;
 
-            int startX = (flowLayoutPanel1.Width - (cardWidth * 3 + spacing * 2)) / 2;
-            int y = (flowLayoutPanel1.Height - cardHeight) / 2;
+            int totalWidth = (cardWidth * 3) + (spacing * 2);
+            int startX = (panelCards.Width - totalWidth) / 2;
+            int y = (panelCards.Height - cardHeight) / 2;
 
-            if (leftIndex >= 0)
-            {
-                var leftCard = allCards[leftIndex];
-                leftCard.Width = cardWidth;
-                leftCard.Height = cardHeight;
-                leftCard.Location = new Point(startX, y);
-                flowLayoutPanel1.Controls.Add(leftCard);
-            }
+            int count = allCards.Count;
+            int leftIndex = (CurrentIndex - 1 + count) % count;
+            int midIndex = CurrentIndex % count;
+            int rightIndex = (CurrentIndex + 1) % count;
 
-            if (CurrentIndex >= 0 && CurrentIndex < allCards.Count)
-            {
-                var midCard = allCards[CurrentIndex];
-                midCard.Width = cardWidth;
-                midCard.Height = cardHeight;
-                midCard.Location = new Point(startX + cardWidth + spacing, y);
-                flowLayoutPanel1.Controls.Add(midCard);
-            }
+            // Левая карточка
+            var leftCard = CloneCard(allCards[leftIndex]);
+            leftCard.Bounds = new Rectangle(startX, y, cardWidth, cardHeight);
+            panelCards.Controls.Add(leftCard);
 
-            if (rightIndex < allCards.Count)
-            {
-                var rightCard = allCards[rightIndex];
-                rightCard.Width = cardWidth;
-                rightCard.Height = cardHeight;
-                rightCard.Location = new Point(startX + (cardWidth + spacing) * 2, y);
-                flowLayoutPanel1.Controls.Add(rightCard);
-            }
+            // Центральная карточка
+            var midCard = CloneCard(allCards[midIndex]);
+            midCard.Bounds = new Rectangle(startX + cardWidth + spacing, y, cardWidth, cardHeight);
+            panelCards.Controls.Add(midCard);
+
+            // Правая карточка
+            var rightCard = CloneCard(allCards[rightIndex]);
+            rightCard.Bounds = new Rectangle(startX + (cardWidth + spacing) * 2, y, cardWidth, cardHeight);
+            panelCards.Controls.Add(rightCard);
+
+            // ==== Центрируем кнопки ====
+            int midY = (panelCards.Height - bPrev.Height) / 2;
+            bPrev.Location = new Point(startX - bPrev.Width - 10, midY);
+            bNext.Location = new Point(startX + totalWidth + 10, midY);
         }
-// Функционал кнопок
+
+        // Делаем клон карточки (иначе используешь один и тот же Control)
+        private CharactersCard CloneCard(CharactersCard original)
+        {
+            CharactersCard clone = new CharactersCard();
+            clone.Pers = original.Pers;
+            clone.ImgPath = original.ImgPath;
+            clone.cardS = original.cardS;
+            clone.Selected = original.Selected;
+            clone.ChooseCard();
+            clone.LoadImgFromFile();
+            return clone;
+        }
+        // Функционал кнопок
         private void bBack1_Click(object sender, EventArgs e)
         {
             tabControl1.SelectedTab = tabPage1;

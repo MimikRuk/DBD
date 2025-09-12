@@ -1,113 +1,63 @@
-﻿using System.Windows.Forms;
+﻿using System.Drawing;
+using System.Windows.Forms;
 
 namespace dbd
 {
     partial class CharactersCard
     {
-        /// <summary> 
-        /// Обязательная переменная конструктора.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
+        private Panel bottomPanel;
+        private Label label1;
+        private CheckBox checkBox1;
+        private PictureBox pictureBox;
 
-        /// <summary> 
-        /// Освободить все используемые ресурсы.
-        /// </summary>
-        /// <param name="disposing">истинно, если управляемый ресурс должен быть удален; иначе ложно.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
 
-        #region Код, автоматически созданный конструктором компонентов
-
-        /// <summary> 
-        /// Требуемый метод для поддержки конструктора — не изменяйте 
-        /// содержимое этого метода с помощью редактора кода.
-        /// </summary>
         private void InitializeComponent()
         {
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            this.pictureBox = new PictureBox();
+            this.bottomPanel = new Panel();
+            this.label1 = new Label();
+            this.checkBox1 = new CheckBox();
+
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
+            this.bottomPanel.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(20, 11, 11, 11);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Padding = new System.Windows.Forms.Padding(10);
-            this.pictureBox1.Size = new System.Drawing.Size(496, 717);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
-            this.pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(31, 627);
-            this.label1.Margin = new System.Windows.Forms.Padding(9, 3, 9, 3);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(85, 29);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "label1";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.label1.Click += new System.EventHandler(this.label1_Click);
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(469, 688);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(15, 14);
-            this.checkBox1.TabIndex = 2;
-            this.checkBox1.UseVisualStyleBackColor = true;
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox2.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(496, 717);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox2.TabIndex = 3;
-            this.pictureBox2.TabStop = false;
-            this.pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
-            // 
-            // CharactersCard
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.checkBox1);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.pictureBox2);
+
+            // === PictureBox (фон + портрет) ===
+            this.pictureBox.Dock = DockStyle.Fill;
+            this.pictureBox.BackColor = Color.Black;
+            this.pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            this.pictureBox.BackgroundImageLayout = ImageLayout.Stretch;
+
+            // === Нижняя панель ===
+            this.bottomPanel.Dock = DockStyle.Bottom;
+            this.bottomPanel.Height = 30;
+            this.bottomPanel.BackColor = Color.FromArgb(150, 0, 0, 0);
+            this.bottomPanel.Controls.Add(this.label1);
+            this.bottomPanel.Controls.Add(this.checkBox1);
+
+            // === Label ===
+            this.label1.Dock = DockStyle.Fill;
+            this.label1.Font = new Font("Arial", 9F, FontStyle.Bold);
+            this.label1.ForeColor = Color.White;
+            this.label1.TextAlign = ContentAlignment.MiddleLeft;
+            this.label1.Text = "Имя";
+
+            // === CheckBox ===
+            this.checkBox1.Dock = DockStyle.Right;
+            this.checkBox1.Width = 20;
+            this.checkBox1.Text = "";
+
+            // === UserControl: карточка ===
+            this.Controls.Add(this.pictureBox);   // картинка занимает всё
+            this.Controls.Add(this.bottomPanel);  // панель снизу поверх картинки
+
             this.Name = "CharactersCard";
-            this.Size = new System.Drawing.Size(496, 717);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            this.Size = new Size(180, 250);
+
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
+            this.bottomPanel.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
-
         }
-
-        #endregion
-
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.PictureBox pictureBox2;
     }
 }
