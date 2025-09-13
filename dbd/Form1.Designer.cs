@@ -39,6 +39,7 @@ namespace dbd
             this.langP = new System.Windows.Forms.Panel();
             this.eng = new System.Windows.Forms.Button();
             this.ru = new System.Windows.Forms.Button();
+            this.exitB = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -46,6 +47,61 @@ namespace dbd
             this.tabPage4.SuspendLayout();
             this.langP.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // button
+            // 
+            this.button.BackColor = System.Drawing.Color.Transparent;
+            this.button.BackgroundImage = global::dbd.Properties.Resources.startB;
+            this.button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.button.FlatAppearance.BorderSize = 0;
+            this.button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button.Location = new System.Drawing.Point(235, 166);
+            this.button.Name = "button";
+            this.button.Size = new System.Drawing.Size(289, 293);
+            this.button.TabIndex = 0;
+            this.button.UseVisualStyleBackColor = false;
+            this.button.Click += new System.EventHandler(this.button_Click);
+            // 
+            // langB
+            // 
+            this.langB.BackgroundImage = global::dbd.Properties.Resources.langB;
+            this.langB.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.langB.FlatAppearance.BorderSize = 0;
+            this.langB.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.langB.Location = new System.Drawing.Point(20, 570);
+            this.langB.Name = "langB";
+            this.langB.Size = new System.Drawing.Size(65, 62);
+            this.langB.TabIndex = 1;
+            this.langB.UseVisualStyleBackColor = true;
+            this.langB.Click += new System.EventHandler(this.langB_Click);
+            // 
+            // pSurv
+            // 
+            this.pSurv.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pSurv.BackgroundImage")));
+            this.pSurv.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pSurv.FlatAppearance.BorderSize = 0;
+            this.pSurv.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.pSurv.Location = new System.Drawing.Point(49, 119);
+            this.pSurv.Name = "pSurv";
+            this.pSurv.Size = new System.Drawing.Size(256, 297);
+            this.pSurv.TabIndex = 2;
+            this.pSurv.UseVisualStyleBackColor = true;
+            this.pSurv.Click += new System.EventHandler(this.pSurv_Click);
+            // 
+            // pKill
+            // 
+            this.pKill.BackgroundImage = global::dbd.Properties.Resources.killB;
+            this.pKill.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pKill.FlatAppearance.BorderSize = 0;
+            this.pKill.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.pKill.Location = new System.Drawing.Point(458, 119);
+            this.pKill.Name = "pKill";
+            this.pKill.Size = new System.Drawing.Size(256, 297);
+            this.pKill.TabIndex = 3;
+            this.pKill.UseVisualStyleBackColor = true;
+            this.pKill.Click += new System.EventHandler(this.pKill_Click);
             // 
             // tabControl1
             // 
@@ -72,22 +128,6 @@ namespace dbd
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // button
-            // 
-            this.button.BackColor = System.Drawing.Color.Transparent;
-            this.button.BackgroundImage = global::dbd.Properties.Resources.startB;
-            this.button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.button.FlatAppearance.BorderSize = 0;
-            this.button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button.Location = new System.Drawing.Point(216, 123);
-            this.button.Name = "button";
-            this.button.Size = new System.Drawing.Size(340, 77);
-            this.button.TabIndex = 0;
-            this.button.UseVisualStyleBackColor = false;
-            this.button.Click += new System.EventHandler(this.button_Click);
             // 
             // tabPage2
             // 
@@ -118,32 +158,6 @@ namespace dbd
             this.bBack1.TabIndex = 7;
             this.bBack1.UseVisualStyleBackColor = false;
             this.bBack1.Click += new System.EventHandler(this.bBack1_Click);
-            // 
-            // pKill
-            // 
-            this.pKill.BackgroundImage = global::dbd.Properties.Resources.killB;
-            this.pKill.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pKill.FlatAppearance.BorderSize = 0;
-            this.pKill.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.pKill.Location = new System.Drawing.Point(458, 119);
-            this.pKill.Name = "pKill";
-            this.pKill.Size = new System.Drawing.Size(256, 297);
-            this.pKill.TabIndex = 3;
-            this.pKill.UseVisualStyleBackColor = true;
-            this.pKill.Click += new System.EventHandler(this.pKill_Click);
-            // 
-            // pSurv
-            // 
-            this.pSurv.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pSurv.BackgroundImage")));
-            this.pSurv.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pSurv.FlatAppearance.BorderSize = 0;
-            this.pSurv.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.pSurv.Location = new System.Drawing.Point(49, 119);
-            this.pSurv.Name = "pSurv";
-            this.pSurv.Size = new System.Drawing.Size(256, 297);
-            this.pSurv.TabIndex = 2;
-            this.pSurv.UseVisualStyleBackColor = true;
-            this.pSurv.Click += new System.EventHandler(this.pSurv_Click);
             // 
             // tabPage3
             // 
@@ -238,19 +252,6 @@ namespace dbd
             this.bBack3.UseVisualStyleBackColor = false;
             this.bBack3.Click += new System.EventHandler(this.bBack3_Click);
             // 
-            // langB
-            // 
-            this.langB.BackgroundImage = global::dbd.Properties.Resources.langB;
-            this.langB.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.langB.FlatAppearance.BorderSize = 0;
-            this.langB.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.langB.Location = new System.Drawing.Point(20, 570);
-            this.langB.Name = "langB";
-            this.langB.Size = new System.Drawing.Size(65, 62);
-            this.langB.TabIndex = 1;
-            this.langB.UseVisualStyleBackColor = true;
-            this.langB.Click += new System.EventHandler(this.langB_Click);
-            // 
             // langP
             // 
             this.langP.Controls.Add(this.eng);
@@ -291,6 +292,25 @@ namespace dbd
             this.ru.UseVisualStyleBackColor = false;
             this.ru.Click += new System.EventHandler(this.ru_Click);
             // 
+            // exitB
+            // 
+            this.exitB.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.exitB.BackColor = System.Drawing.Color.Transparent;
+            this.exitB.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.exitB.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.exitB.FlatAppearance.BorderSize = 0;
+            this.exitB.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.exitB.BackgroundImage = global::dbd.Properties.Resources.exitB;
+            this.exitB.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.exitB.Location = new System.Drawing.Point(660, 20);
+            this.exitB.Name = "exitB";
+            this.exitB.Size = new System.Drawing.Size(90, 90);
+            this.exitB.TabIndex = 100;
+            this.exitB.UseVisualStyleBackColor = false;
+            this.exitB.Click += new System.EventHandler(this.exitB_Click);
+            this.Controls.Add(this.exitB);
+            this.exitB.BringToFront();
+            //
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -300,6 +320,7 @@ namespace dbd
             this.Controls.Add(this.langB);
             this.Controls.Add(this.langP);
             this.Controls.Add(this.tabControl1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "DBDRandom";
@@ -310,6 +331,7 @@ namespace dbd
             this.tabPage4.ResumeLayout(false);
             this.langP.ResumeLayout(false);
             this.ResumeLayout(false);
+
         }
 
         #endregion
@@ -331,6 +353,7 @@ namespace dbd
         private System.Windows.Forms.Button bBack3;
         private System.Windows.Forms.Button bNext;
         private System.Windows.Forms.Button bPrev;
+        private System.Windows.Forms.Button exitB;
         private dbd.DoubleBufferedPanel panelCards;
     }
 }

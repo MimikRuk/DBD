@@ -12,13 +12,17 @@ namespace dbd
 // Объявление переменых и стартовые данные
     public partial class Form1 : Form
     {
+        //Переменная языка текста
         private bool Ru = true;
+        //Переменная роли персонажа
         private bool Pick = true;
+        //Лист для хранения всех карточек
         private List<CharactersCard> allCards = new List<CharactersCard>();
         public Form1()
         {
             InitializeComponent();
             this.Load += async (s, e) => await LoadData();
+            //Скрытие вкладок в tabControl
             tabControl1.Appearance = TabAppearance.FlatButtons;
             tabControl1.ItemSize = new Size(0, 1);
             tabControl1.SizeMode = TabSizeMode.Fixed;
@@ -27,19 +31,22 @@ namespace dbd
             this.MinimizeBox = true;
             this.SizeGripStyle = SizeGripStyle.Hide;
             this.StartPosition = FormStartPosition.CenterScreen;
-            foreach (var btn in new[] { pSurv, pKill, langB, bNext, bPrev, ru, eng, bBack1, bBack2, bBack3, button})
+            //Список элементов к которым применяется эффект увеличения при наведении
+            foreach (var btn in new[] { pSurv, pKill, langB, bNext, bPrev, ru, eng, bBack1, bBack2, bBack3, button, exitB})
             {
                 btn.MouseEnter += Button_MouseEnter;
                 btn.MouseLeave += Button_MouseLeave;
             }
+            //Центрирование кнопки старта
             button.Location = new Point(
     (this.ClientSize.Width - button.Width) / 2,
     (this.ClientSize.Height - button.Height) / 2);
         }
+
 // Изменение размера элементов при наведении на них
 
         private Dictionary<Button, (Size, Point)> originalStates = new Dictionary<Button, (Size, Point)>();
-
+// Увеличение
         private void Button_MouseEnter(object sender, EventArgs e)
         {
             var btn = sender as Button;
@@ -53,7 +60,7 @@ namespace dbd
             btn.Size = new Size(btn.Width + dw, btn.Height + dh);
             btn.Location = new Point(btn.Location.X - dw / 2, btn.Location.Y - dh / 2);
         }
-
+// Уменьшение
         private void Button_MouseLeave(object sender, EventArgs e)
         {
             var btn = sender as Button;
@@ -64,12 +71,8 @@ namespace dbd
                 btn.Size = size;
                 btn.Location = loc;
             }
-        }
-
-// Прозрачность FloatLayoutPanel1
-
-        
-// Выборка по роли и языку, а так же логика отображения персонажей
+        }   
+//Логика отображения и загрузки файлов
         private async Task LoadData()
         {
             pSurv.Show();
@@ -78,7 +81,7 @@ namespace dbd
             using (var conn = new SqliteConnection($"Data Source={dbFile}"))
             {
                 await conn.OpenAsync();
-
+                //Создание SQL запроса на основе выбранного языка и роли персонажа
                 string langColumn = Ru ? "Ruverse" : "Name";
 
                 string roleFilter = Pick ? "Survivor" : "Killer";
@@ -89,8 +92,9 @@ namespace dbd
                 using (var reader = await cmd.ExecuteReaderAsync())
                 {
                     allCards.Clear();
+                    //Сдвиг порядка карточек на 1
                     CurrentIndex = 1;
-
+                    //Чтение и создание карточек
                     while (await reader.ReadAsync())
                     {
                         var card = new CharactersCard();
@@ -103,22 +107,22 @@ namespace dbd
                         card.ChooseCard();
                         Console.WriteLine($"Card {card.Pers} -> {fullPath} (exists: {File.Exists(fullPath)})");
                         card.LoadImgFromFile();
-                        // 🔥 фикс начальных размеров
                         card.Width = 180;
                         card.Height = 250;
                         card.AutoSize = false;
 
                         allCards.Add(card);
                     }
-
-                    RenderCards(); // вызов рисования
+                    //Отоброжение колеса выбора персонажей
+                    RenderCards();
                 }
             }
         }
-//Отдельные индексы прокрутки колеса выбора персонажей
+//Отдельные индексы прокрутки колеса выбора персонажей для разных ролей
         private int currentSurvIndex = 0;
         private int currentKillIndex = 0;
 
+        //Свойство определения текущего индекса в зависимости от роли
         private int CurrentIndex
         {
             get => Pick ? currentSurvIndex : currentKillIndex;
@@ -128,47 +132,51 @@ namespace dbd
                 else currentKillIndex = value;
             }
         }
-        // Логика колеса
+// Отображение колеса выбора персонажей из 3 карточек
         private void RenderCards()
         {
             panelCards.Controls.Clear();
             if (allCards.Count == 0) return;
-
-            int cardWidth = 180;
-            int cardHeight = 250;
-            int spacing = 50;
-
+            //Размер
+            int cardWidth = 200;
+            int cardHeight = 280;
+            int spacing = 60;
+            //Позиция
             int totalWidth = (cardWidth * 3) + (spacing * 2);
             int startX = (panelCards.Width - totalWidth) / 2;
             int y = (panelCards.Height - cardHeight) / 2;
-
+            //Получение индексов для каждой из 3 карточек
             int count = allCards.Count;
             int leftIndex = (CurrentIndex - 1 + count) % count;
             int midIndex = CurrentIndex % count;
             int rightIndex = (CurrentIndex + 1) % count;
-
-            // Левая карточка
+            //создание и добавление клонов карточек
             var leftCard = CloneCard(allCards[leftIndex]);
             leftCard.Bounds = new Rectangle(startX, y, cardWidth, cardHeight);
             panelCards.Controls.Add(leftCard);
 
-            // Центральная карточка
             var midCard = CloneCard(allCards[midIndex]);
             midCard.Bounds = new Rectangle(startX + cardWidth + spacing, y, cardWidth, cardHeight);
             panelCards.Controls.Add(midCard);
 
-            // Правая карточка
             var rightCard = CloneCard(allCards[rightIndex]);
             rightCard.Bounds = new Rectangle(startX + (cardWidth + spacing) * 2, y, cardWidth, cardHeight);
             panelCards.Controls.Add(rightCard);
-
-            // ==== Центрируем кнопки ====
-            int midY = (panelCards.Height - bPrev.Height) / 2;
-            bPrev.Location = new Point(startX - bPrev.Width - 10, midY);
-            bNext.Location = new Point(startX + totalWidth + 10, midY);
+            //Размещение кнопок переключения персонажа
+            Point midCardAbsoluteLocation = new Point(
+            panelCards.Location.X + midCard.Location.X,
+            panelCards.Location.Y + midCard.Location.Y);
+            int buttonCenterY = midCardAbsoluteLocation.Y + (cardHeight / 2);
+            int buttonY = buttonCenterY - (bPrev.Height / 2);
+            int buttonOffset = 15;
+            int prevButtonX = midCardAbsoluteLocation.X - bPrev.Width - buttonOffset;
+            int nextButtonX = midCardAbsoluteLocation.X + cardWidth + buttonOffset;
+            bPrev.Location = new Point(prevButtonX, buttonY);
+            bNext.Location = new Point(nextButtonX, buttonY);
+            bPrev.BringToFront();
+            bNext.BringToFront();
         }
 
-        // Делаем клон карточки (иначе используешь один и тот же Control)
         private CharactersCard CloneCard(CharactersCard original)
         {
             CharactersCard clone = new CharactersCard();
@@ -180,7 +188,32 @@ namespace dbd
             clone.LoadImgFromFile();
             return clone;
         }
-        // Функционал кнопок
+
+        private bool dragging = false;
+        private Point dragCursorPoint;
+        private Point dragFormPoint;
+        private void Form1_MouseDown(object sender, MouseEventArgs e)
+        {
+            dragging = true;
+            dragCursorPoint = Cursor.Position;
+            dragFormPoint = this.Location;
+        }
+
+        private void Form1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (dragging)
+            {
+                Point dif = Point.Subtract(Cursor.Position, new Size(dragCursorPoint));
+                this.Location = Point.Add(dragFormPoint, new Size(dif));
+            }
+        }
+
+        private void Form1_MouseUp(object sender, MouseEventArgs e)
+        {
+            dragging = false;
+        }
+
+// Функционал кнопок
         private void bBack1_Click(object sender, EventArgs e)
         {
             tabControl1.SelectedTab = tabPage1;
@@ -201,8 +234,9 @@ namespace dbd
         {
             langP.Visible = true;
         }
-        private void button5_Click(object sender, EventArgs e)
+        private void exitB_Click(object sender, EventArgs e)
         {
+            this.Close();
         }
         private async void ru_Click(object sender, EventArgs e)
         {
