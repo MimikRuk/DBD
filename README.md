@@ -1,4 +1,4 @@
-# DBD Perk & Character Randomizer
+# DBD Perk Randomizer
 
 Приложение позволяющее выбрать случайный билд, по заданным критериям
 
